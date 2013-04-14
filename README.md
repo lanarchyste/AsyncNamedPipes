@@ -17,6 +17,7 @@ Les pipes nommées corrigent les défauts WCF même si son utilisation de base n
 ##Projet
 
 Actuellement, je suis le seul développeur sur ce projet.
+
 Ce projet est fait sur mon temps libre, le développement peut donc y être long.
 
 ##Fonctionnalités
