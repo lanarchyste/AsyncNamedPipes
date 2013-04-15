@@ -39,10 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event\PipeDisconnectedEventArgs.cs" />
+    <Compile Include="Event\PipeDisconnectedEventHandler.cs" />
     <Compile Include="Message\GenericMessage.cs" />
     <Compile Include="Message\IMessage.cs" />
-    <Compile Include="MessageEventArgs.cs" />
-    <Compile Include="MessageEventHandler.cs" />
+    <Compile Include="Event\MessageEventArgs.cs" />
+    <Compile Include="Event\MessageEventHandler.cs" />
     <Compile Include="MessageSerializer.cs" />
     <Compile Include="NamedPipeBase.cs" />
     <Compile Include="NamedPipeClient.cs" />

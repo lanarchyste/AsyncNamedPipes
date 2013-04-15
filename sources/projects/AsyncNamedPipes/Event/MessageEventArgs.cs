@@ -1,7 +1,7 @@
 ﻿using System;
 using AsyncNamedPipes.Message;
 
-namespace AsyncNamedPipes
+namespace AsyncNamedPipes.Event
 {
     [Serializable]
     public class MessageEventArgs

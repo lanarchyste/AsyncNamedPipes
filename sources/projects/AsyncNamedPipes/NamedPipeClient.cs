@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Pipes;
+using AsyncNamedPipes.Event;
 using AsyncNamedPipes.Message;
 
 namespace AsyncNamedPipes
