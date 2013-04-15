@@ -11,7 +11,6 @@ namespace AsyncNamedPipes
         public NamedPipeClient(string pipeName)
             : base(pipeName)
         {
-
         }
 
         ~NamedPipeClient()
@@ -52,7 +51,26 @@ namespace AsyncNamedPipes
 
         public override void SendMessage(byte[] message)
         {
-            throw new NotImplementedException();
+            lock (_pipeLock)
+            {
+                if (!_pipeStream.IsConnected)
+                    return;
+
+                if (message.Length <= 0)
+                    return;
+
+                _pipeStream.BeginWrite(message, 0, message.Length, EndWrite, null);
+                _pipeStream.Flush();
+            }
+        }
+
+        private void EndWrite(IAsyncResult result)
+        {
+            lock (_pipeLock)
+            {
+                _pipeStream.EndWrite(result);
+                _pipeStream.Flush();
+            }
         }
 
         private void BeginRead()
@@ -69,13 +87,13 @@ namespace AsyncNamedPipes
             var buffer = (byte[])result.AsyncState;
 
             var length = _pipeStream.EndRead(result);
-            if (length > 0)
-            {
-                var destinationArray = new byte[length];
-                Array.Copy(buffer, 0, destinationArray, 0, length);
-                
-                OnMessageReceived(new MessageEventArgs(destinationArray));
-            }
+            if (length <= 0)
+                return;
+
+            var destinationArray = new byte[length];
+            Array.Copy(buffer, 0, destinationArray, 0, length);
+
+            OnMessageReceived(new MessageEventArgs(destinationArray));
 
             lock (_pipeLock)
                 BeginRead();
