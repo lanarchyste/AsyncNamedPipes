@@ -1,18 +1,19 @@
 ﻿using System;
+using AsyncNamedPipes.Message;
 
 namespace AsyncNamedPipes
 {
     [Serializable]
     public class MessageEventArgs
     {
-        private readonly byte[] _message;
+        private readonly IMessage _message;
 
-        public MessageEventArgs(byte[] message)
+        public MessageEventArgs(IMessage message)
         {
             _message = message;
         }
 
-        public byte[] Message
+        public IMessage Message
         {
             get { return _message; }
         }

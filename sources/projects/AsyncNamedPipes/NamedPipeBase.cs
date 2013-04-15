@@ -1,4 +1,5 @@
 ﻿using System;
+using AsyncNamedPipes.Message;
 
 namespace AsyncNamedPipes
 {
@@ -52,7 +53,7 @@ namespace AsyncNamedPipes
             }
         }
 
-        public abstract void SendMessage(byte[] message);
+        public abstract void SendMessage(IMessage message);
 
         protected virtual void OnMessageReceived(MessageEventArgs args)
         {

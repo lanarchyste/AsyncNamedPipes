@@ -4,41 +4,26 @@ using AsyncNamedPipes.Message;
 
 namespace AsyncNamedPipes
 {
-    public class NamedPipeClient : NamedPipeBase
+    public class NamedPipeConnection : NamedPipeBase
     {
+        private readonly PipeStream _pipeStream;
         private readonly object _pipeLock = new object();
-        private PipeStream _pipeStream;
 
-        public NamedPipeClient(string pipeName)
-            : base(pipeName)
+        public NamedPipeConnection(PipeStream pipeStream, string pipeName) : base(pipeName)
         {
+            _pipeStream = pipeStream;
+
+            ReceiveMessage();
         }
 
-        ~NamedPipeClient()
+        ~NamedPipeConnection()
         {
             Dispose(false);
         }
 
-        public void Connect(int timeout)
-        {
-            lock (_pipeLock)
-            {
-                _pipeStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous | PipeOptions.WriteThrough);
-                ((NamedPipeClientStream)_pipeStream).Connect(timeout);
-
-                _pipeStream.ReadMode = PipeTransmissionMode.Message;
-
-                ReceiveMessage();
-            }
-        }
-
         public bool IsConnected
         {
-            get
-            {
-                lock (_pipeLock)
-                    return _pipeStream.IsConnected;
-            }
+            get { return _pipeStream.IsConnected; }
         }
 
         public override void Disconnect()
@@ -52,7 +37,7 @@ namespace AsyncNamedPipes
 
         public override void SendMessage(IMessage message)
         {
-            lock (_pipeLock)
+            lock (_pipeStream)
             {
                 if (!_pipeStream.IsConnected)
                     return;

@@ -39,10 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Message\GenericMessage.cs" />
+    <Compile Include="Message\IMessage.cs" />
     <Compile Include="MessageEventArgs.cs" />
     <Compile Include="MessageEventHandler.cs" />
+    <Compile Include="MessageSerializer.cs" />
     <Compile Include="NamedPipeBase.cs" />
     <Compile Include="NamedPipeClient.cs" />
+    <Compile Include="NamedPipeConnection.cs" />
+    <Compile Include="NamedPipeServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
