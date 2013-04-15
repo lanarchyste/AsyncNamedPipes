@@ -39,7 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="MessageEventArgs.cs" />
+    <Compile Include="MessageEventHandler.cs" />
+    <Compile Include="NamedPipeBase.cs" />
+    <Compile Include="NamedPipeClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
