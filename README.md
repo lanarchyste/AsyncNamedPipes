@@ -14,20 +14,17 @@ Hélàs le WCF s'est vite montré insatisfaisant de par les points suivants :
 
 Les pipes nommées corrigent les défauts WCF même si son utilisation de base n'est pas destiné à du full duplex.
 
-##Projet
-
-Actuellement, je suis le seul développeur sur ce projet.
-
-Ce projet est fait sur mon temps libre, le développement peut donc y être long.
-
 ##Fonctionnalités
 
-* Mode Full-Duplex
-* Envoie d'un message vers un client précis ou tous les clients
-* Traitement des messages asynchrone
-* Aucune perte des messages ne pouvant être envoyés (déconnexion, timeout...)
-* Envoie de classe dans le message de communication
+* [ ] Mode Full-Duplex
+* [ ] Envoie d'un message vers un client précis ou tous les clients
+* [ ] Traitement des messages asynchrone
+* [ ] Aucune perte des messages ne pouvant être envoyés (à cause d'une déconnexion, timeout...)
+* [ ] Envoie de classe dans le message de communication
 
+##Contribution
+
+* Moi (lanarchyste)
 
 
 
