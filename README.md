@@ -16,9 +16,9 @@ Les pipes nommées corrigent les défauts WCF même si son utilisation de base n
 
 ##Fonctionnalités
 
-* [ ] Mode Full-Duplex
+* [x] Mode Full-Duplex
 * [ ] Envoie d'un message vers un client précis ou tous les clients
-* [ ] Traitement des messages asynchrone
+* [x] Traitement des messages asynchrone
 * [ ] Aucune perte des messages ne pouvant être envoyés (à cause d'une déconnexion, timeout...)
 * [ ] Envoie de classe dans le message de communication
 
