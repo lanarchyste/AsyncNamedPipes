@@ -20,16 +20,26 @@ namespace AsyncNamedPipes
             Dispose(false);
         }
 
-        public void Connect(int timeout)
+        public bool Connect(int timeout)
         {
-            lock (_pipeLock)
+            try
             {
-                _pipeStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous | PipeOptions.WriteThrough);
-                ((NamedPipeClientStream)_pipeStream).Connect(timeout);
+                lock (_pipeLock)
+                {
+                    _pipeStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut,
+                                                            PipeOptions.Asynchronous | PipeOptions.WriteThrough);
+                    ((NamedPipeClientStream) _pipeStream).Connect(timeout);
 
-                _pipeStream.ReadMode = PipeTransmissionMode.Message;
+                    _pipeStream.ReadMode = PipeTransmissionMode.Message;
 
-                ReceiveMessage();
+                    ReceiveMessage();
+
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
