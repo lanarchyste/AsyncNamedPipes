@@ -5,12 +5,13 @@ namespace AsyncNamedPipes.Message
     [Serializable]
     public class GenericMessage : IMessage
     {
-        public GenericMessage(string sender, string receiver, DateTime messageDateTime, Type messageType)
+        public GenericMessage(string sender, string receiver, DateTime messageDateTime, Type messageType, object args)
         {
             Sender = sender;
             Receiver = receiver;
             MessageDateTime = messageDateTime;
             MessageType = messageType;
+            Args = args;
         }
 
         public string Sender { get; private set; }
@@ -20,5 +21,12 @@ namespace AsyncNamedPipes.Message
         public DateTime MessageDateTime { get; private set; }
 
         public Type MessageType { get; private set; }
+
+        public object Args { get; private set; }
+
+        public override string ToString()
+        {
+            return MessageDateTime.ToShortDateString() + " - " + Args;
+        }
     }
 }

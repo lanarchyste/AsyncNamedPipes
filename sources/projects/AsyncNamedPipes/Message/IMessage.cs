@@ -8,5 +8,6 @@ namespace AsyncNamedPipes.Message
         string Receiver { get; }
         DateTime MessageDateTime { get; }
         Type MessageType { get; }
+        object Args { get; }
     }
 }
