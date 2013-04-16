@@ -13,14 +13,12 @@ namespace AsyncNamedPipes
     {
         private readonly List<NamedPipeConnection> _pipesConnected;
         private readonly PipeSecurity _pipeSecurity;
-        private bool _isRunning;
+        private readonly int _instances;
 
         public NamedPipeServer(string pipeName, int instances)
             : base(pipeName)
         {
             _pipesConnected = new List<NamedPipeConnection>();
-
-            _isRunning = true;
 
             _pipeSecurity = new PipeSecurity();
 
@@ -30,9 +28,7 @@ namespace AsyncNamedPipes
 
             _pipeSecurity.AddAccessRule(new PipeAccessRule(new SecurityIdentifier(WellKnownSidType.AuthenticatedUserSid, null), PipeAccessRights.ReadWrite, AccessControlType.Allow));
 
-
-            for (var i = 0; i < instances; i++)
-                CreateServerPipe();
+            _instances = instances;
         }
 
         ~NamedPipeServer()
@@ -40,11 +36,30 @@ namespace AsyncNamedPipes
             Dispose(false);
         }
 
+        public void Connect()
+        {
+            IsRunning = true;
+
+            for (var i = 0; i < _instances; i++)
+                CreateServerPipe();
+        }
+
+        public bool IsRunning { get; private set; }
+
+        public int ClientsConnectedCount
+        {
+            get
+            {
+                lock (_pipesConnected)
+                    return _pipesConnected.Count;
+            }
+        }
+
         public override void Disconnect()
         {
             lock (_pipesConnected)
             {
-                _isRunning = false;
+                IsRunning = false;
 
                 foreach (var pipeConnected in _pipesConnected)
                 {
@@ -118,7 +133,7 @@ namespace AsyncNamedPipes
             var serverStreamState = (NamedPipeServerStream)result.AsyncState;
             serverStreamState.EndWaitForConnection(result);
 
-            if (_isRunning)
+            if (IsRunning)
             {
                 if (serverStreamState.IsConnected)
                 {
